@@ -1,0 +1,20 @@
+{
+  "name": "blog-api",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/boakaidorborkamara/blog-api#readme",
+  "bugs": {
+    "url": "https://github.com/boakaidorborkamara/blog-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boakaidorborkamara/blog-api.git"
+  },
+  "license": "MIT",
+  "author": "Boakai Dorbor Kamara",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
