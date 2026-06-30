@@ -1,37 +1,23 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require("Express");
+const dotenv = require('dotenv').config();
+const mongoose = require("mongoose");
+const logger = require("./utils/logger");
+const {PORT, MONGO_URL} = require("./utils/config");
+const app = express();
 
-const app = express()
+// DB CONFIG 
+logger.info("Connecting to database.");
 
-const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
+mongoose.connect(MONGO_URL)
+.then(()=>{
+    logger.info("Database connection successfully!");
 })
+.catch(err =>{logger.error(err)});
 
-const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl, { family: 4 })
 
-app.use(express.json())
-
-app.get('/api/blogs', (request, response) => {
-  Blog.find({}).then((blogs) => {
-    response.json(blogs)
-  })
+app.listen(PORT, ()=>{
+    console.log(`app is listening on ${PORT} `);
 })
-
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
-
-  blog.save().then((result) => {
-    response.status(201).json(result)
-  })
-})
-
-const PORT = 3003
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+ 
+ 
