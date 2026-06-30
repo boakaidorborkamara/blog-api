@@ -1,19 +1,23 @@
-//  title: String,
-//   author: String,
-//   url: String,
-//   likes: Number,
-
 const mongoose = require("mongoose");
 
 const BlogSchema = new mongoose.Schema({
     title:{
         type: String,
+        minlength: 2,
         required: true
     },
      author:{
         type: String,
         minlength: 2,
         required: true
+    },
+        url:{
+        type: String,
+        minlength: 2,
+        required: true
+    },
+        likes:{
+        type: Number
     }
 });
 
