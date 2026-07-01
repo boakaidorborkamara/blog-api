@@ -12,4 +12,8 @@ function errorHandler(error, req, res, next){
     next();
 }
 
-module.exports = {routeLogger, errorHandler};
+function notFound(req, res, next){
+    res.status(404).json({success:false, message:"Route not found!", data:null});
+}
+
+module.exports = {routeLogger, errorHandler, notFound};
