@@ -16,7 +16,15 @@ const addBlog = (req, res, next)=>{
     .catch(err => next(err));
 }
 
+const getBlogs = (req, res, next)=>{
+    Blog.find({})
+    .then(result =>{
+        res.status(200).json({success:true, message:"Blogs fetched successfully", data:result});
+    })
+    .catch(err => next(err));
+}
 
 module.exports = {
-    addBlog
+    addBlog,
+    getBlogs
 }

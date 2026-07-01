@@ -3,5 +3,6 @@ const BlogController = require("../controller/blogController");
 const Router = express.Router();
 
 Router.post("/api/blogs", BlogController.addBlog);
+Router.get("/api/blogs", BlogController.getBlogs);
 
 module.exports = Router;
