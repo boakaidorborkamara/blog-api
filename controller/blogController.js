@@ -24,7 +24,22 @@ const getBlogs = (req, res, next)=>{
     .catch(err => next(err));
 }
 
+const getBlog = (req, res, next)=>{
+    let id = req.params.id;
+
+    Blog.findById(id)
+    .then(blog =>{
+        if(blog === null){
+            return res.status(404).json({success:false, message:"Blog doesn't exist!", data:null});
+        }
+
+        res.status(200).json({success:true, message:"Blog fetched successfully!", data:blog});
+    })
+    .catch(err => next(err));
+}
+
 module.exports = {
     addBlog,
-    getBlogs
+    getBlogs,
+    getBlog
 }

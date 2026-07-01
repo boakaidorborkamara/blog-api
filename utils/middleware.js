@@ -8,7 +8,17 @@ function routeLogger(req, res, next){
 }
 
 function errorHandler(error, req, res, next){
-    res.status(500).json({success:false, message: error.message, data:null});
+    console.log("err", error)
+    if(error.name === "ValidationError"){
+        return res.status(400).json({success:false, message: error.message, data:null});
+    }
+    else if(error.name === "CastError"){
+        return res.status(400).json({success:false, message: "Invalid ID format!", data:null});
+    }
+    else{
+        return res.status(500).json({success:false, message: "Server encounter an error!", data:null});
+    }
+    
     next();
 }
 
