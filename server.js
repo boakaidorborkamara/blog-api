@@ -2,9 +2,9 @@ const express = require("Express");
 const dotenv = require('dotenv').config();
 const mongoose = require("mongoose");
 const logger = require("./utils/logger");
-const middlware = require("./utils/middleware");
+const {routeLogger, errorHandler} = require("./utils/middleware");
 const {PORT, MONGO_URL} = require("./utils/config");
-const BlogRouter = require("./router/blogRouter")
+const BlogRouter = require("./router/blogRouter");
 const app = express();
 
 
@@ -22,12 +22,14 @@ mongoose.connect(MONGO_URL)
 
 // MIDDLEWARES
 app.use(express.json());
-app.use(middlware.routeLogger); 
+app.use(routeLogger); 
+
 
 
 
 // ROUTES 
 app.use(BlogRouter);
+app.use(errorHandler);
 
 
 

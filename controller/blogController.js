@@ -1,7 +1,7 @@
 const Blog = require("../model/blogModel");
 const logger = require("../utils/logger");
 
-const addBlog = (req, res)=>{
+const addBlog = (req, res, next)=>{
     logger.info("Adding a new blog...");
 
     let {title, author, url, likes} = req.body;
@@ -13,7 +13,7 @@ const addBlog = (req, res)=>{
         console.log("blog added", blog)
         res.status(201).json(blog)
     })
-    .catch(err => console.log(err));
+    .catch(err => next(err));
 }
 
 
