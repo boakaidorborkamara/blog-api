@@ -1,4 +1,4 @@
-const PORT = 3000 || process.env.PORT;
+let PORT = 3000 || process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 
 
