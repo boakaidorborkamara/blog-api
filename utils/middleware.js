@@ -8,8 +8,7 @@ function routeLogger(req, res, next){
 }
 
 function errorHandler(error, req, res, next){
-    console.log("error hangler running")
-    res.status(500).json(error.message);
+    res.status(500).json({success:false, message: error.message, data:null});
 }
 
 module.exports = {routeLogger, errorHandler};
