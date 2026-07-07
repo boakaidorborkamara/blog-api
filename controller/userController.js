@@ -4,7 +4,7 @@ const logger = require("../utils/logger");
 const addUser = (req, res, next)=>{
     logger.info("Adding a new blog...");
 
-    let {username, name} = req.body;
+    let {username, name, password} = req.body;
 
     let new_user = new User({username, name});
 

@@ -11,9 +11,14 @@ const UserSchema = new mongoose.Schema({
         minlength: 2,
         required: true
     },
-    
+    password:{
+        type: String,
+        minlength: 5,
+        required: true
+    },
 });
 
+console.log("creating model....")
 
 UserSchema.set("toJSON", {transform:(doc, return_values)=>{
     return_values.id = doc._id;
@@ -21,6 +26,6 @@ UserSchema.set("toJSON", {transform:(doc, return_values)=>{
     delete return_values.__v;
 }})
 
-const User = mongoose.model("Blog", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

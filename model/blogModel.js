@@ -30,4 +30,4 @@ BlogSchema.set("toJSON", {transform:(doc, return_values)=>{
 
 const Blog = mongoose.model("Blog", BlogSchema);
 
-module.exports = Blog;
+module.exports = Blog; 
