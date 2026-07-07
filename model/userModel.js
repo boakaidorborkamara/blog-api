@@ -16,6 +16,11 @@ const UserSchema = new mongoose.Schema({
         minlength: [5, "Password is less than 5 characters"],
         required: true
     },
+    blogs:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Blog",
+        defaultValues:[]
+    }
 });
 
 console.log("creating model....")
