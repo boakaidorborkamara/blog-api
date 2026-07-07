@@ -6,6 +6,7 @@ const {routeLogger, errorHandler, notFound} = require("./utils/middleware");
 const {PORT, MONGO_URL} = require("./utils/config");
 const BlogRouter = require("./router/blogRouter");
 const UserRouter = require("./router/userRouter");
+const loginRouter = require("./router/loginRouter");
 const app = express();
 
 
@@ -26,8 +27,7 @@ app.use(routeLogger);
 
 
 // ROUTES 
-app.use(BlogRouter);
-app.use(UserRouter);
+app.use("/api", BlogRouter, UserRouter, loginRouter);
 
 
 app.use(errorHandler);
