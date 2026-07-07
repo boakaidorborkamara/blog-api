@@ -2,16 +2,16 @@ const User = require("../model/userModel");
 const logger = require("../utils/logger");
 
 const addUser = (req, res, next)=>{
-    logger.info("Adding a new blog...");
+    logger.info("Adding a new user...");
 
     let {username, name, password} = req.body;
 
-    let new_user = new User({username, name});
+    let new_user = new User({username, name, password});
 
     new_user.save()
     .then(blog =>{
-        logger.info("user added", user)
-        res.status(201).json({success:true, message:"User created successfully!", data: user})
+        logger.info("user added", new_user)
+        res.status(201).json({success:true, message:"User created successfully!", data: new_user})
     })
     .catch(err => next(err));
 }
