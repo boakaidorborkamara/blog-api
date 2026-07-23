@@ -8,13 +8,13 @@ const logIn = (req, res, next)=>{
 
     let {username, password} = req.body;
 
-    // validate for missing fields
-    // if(!username){
-    //     return res.status(400).json({success:false, message:"username is required!", data:null})
-    // }
-    // else if(!password){
-    //     return res.status(400).json({success:false, message:"password are required!", data:null})
-    // }
+    // validate for missing fields 
+    if(!username){
+        return res.status(400).json({success:false, message:"username is required!", data:null})
+    }
+    else if(!password){
+        return res.status(400).json({success:false, message:"password are required!", data:null})
+    }
 
     User.findOne({username:username}).lean()
     .then(user =>{
@@ -37,12 +37,15 @@ const logIn = (req, res, next)=>{
 
             // handle correct password 
             delete user.password;
-            console.log("user", user)
-            let token = jwt.sign({ username: user.username, id:user.id }, JWT_SECRET, { expiresIn: '24h' });
+            let access_token = jwt.sign({ username: user.username, id:user.id }, JWT_SECRET, { expiresIn: '24h' });
+            let refresh_token = jwt.sign({ username: user.username, id:user.id }, JWT_SECRET, { expiresIn: '30d' });
 
-            console.log(typeof user)
-            
-            res.status(200).json({success:true, msg:"Login successful", token:token, data: user});
+
+            res.cookie("refresh_token", refresh_token, {httpOnly:true} );
+            res.status(200).json({success:true, msg:"Login successful", token:access_token, data: user});
+        })
+        .catch(err => {
+            next(err)
         });
     }) 
 

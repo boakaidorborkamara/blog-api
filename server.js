@@ -1,4 +1,5 @@
 const express = require("Express");
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const mongoose = require("mongoose");
 const logger = require("./utils/logger");
@@ -7,6 +8,7 @@ const {PORT, MONGO_URL} = require("./utils/config");
 const BlogRouter = require("./router/blogRouter");
 const UserRouter = require("./router/userRouter");
 const loginRouter = require("./router/loginRouter");
+const refreshTokenRouter = require("./router/refreshTokenRouter");
 const app = express();
 
 
@@ -24,10 +26,11 @@ mongoose.connect(MONGO_URL)
 // MIDDLEWARES
 app.use(express.json());
 app.use(routeLogger); 
+app.use(cookieParser());
 
 
 // ROUTES 
-app.use("/api", BlogRouter, UserRouter, loginRouter);
+app.use("/api", BlogRouter, UserRouter, loginRouter, refreshTokenRouter);
 
 
 app.use(errorHandler);

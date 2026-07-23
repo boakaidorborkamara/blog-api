@@ -1,19 +1,34 @@
 const Blog = require("../model/blogModel");
+const User = require("../model/userModel");
 const logger = require("../utils/logger");
 
-const addBlog = (req, res, next)=>{
-    logger.info("Adding a new blog...");
+const addBlog = async (req, res, next)=>{
+    try{
+        logger.info("Adding a new blog...");
 
-    let {title, author} = req.body;
+        console.log("user", req.user)
+        let user = await User.findOne({username:req.user.username}).exec();
+        
+        
 
-    let new_blog = new Blog({title, author});
+       
+        let {title, author} = req.body;
 
-    new_blog.save()
-    .then(blog =>{
+        let new_blog = new Blog({title, author, user : user._id});
+
+        let blog = await new_blog.save();
+
+        let result = await User.find({username:user.username}, {blogs:[blog.id]});
+
+        console.log("result", result);
+        
         logger.info("blog added", blog)
         res.status(201).json({success:true, message:"Blog created successfully!", data: blog})
-    })
-    .catch(err => next(err));
+    }
+    catch(err){
+        next(err)
+    }
+    
 }
 
 const getBlogs = (req, res, next)=>{
