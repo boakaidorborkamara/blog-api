@@ -6,21 +6,21 @@ const addBlog = async (req, res, next)=>{
     try{
         logger.info("Adding a new blog...");
 
-        console.log("user", req.user)
+        // get logged in user 
         let user = await User.findOne({username:req.user.username}).exec();
         
-        
-
-       
+        // get details for new blog 
         let {title, author} = req.body;
 
+        // create and add new blog to db 
         let new_blog = new Blog({title, author, user : user._id});
-
         let blog = await new_blog.save();
 
-        let result = await User.find({username:user.username}, {blogs:[blog.id]});
+        // update user to include new blog for logged in user 
+        user.blogs = [...user.blogs, blog.id];
+        let uresult = await user.save();
 
-        console.log("result", result);
+    
         
         logger.info("blog added", blog)
         res.status(201).json({success:true, message:"Blog created successfully!", data: blog})
